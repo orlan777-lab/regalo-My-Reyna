@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti, Mi Amor: 5 Días & Un Destino</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #070913;
+            --bg-card: rgba(13, 17, 38, 0.75);
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --accent-gold: #f59e0b;
+            --accent-gold-glow: rgba(245, 158, 11, 0.3);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: rgba(59, 130, 246, 0.25);
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(29, 78, 216, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 1) 0%, #030712 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-top: 15px;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            background: var(--accent-gold-glow);
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        /* Days Navigation Grid */
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .day-btn {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .day-btn.active {
+            border-color: var(--primary);
+            color: #ffffff;
+            background: rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .day-btn.completed {
+            border-color: var(--success);
+            color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        /* Challenge Area */
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 10px;
+        }
+
+        .challenge-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 18px;
+            color: var(--text-main);
+            text-align: left;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--success);
+            color: #34d399;
+        }
+
+        .option-btn.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error);
+            color: #f87171;
+        }
+
+        .feedback-box {
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid var(--primary);
+            display: none;
+        }
+
+        .feedback-box.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* Reward Section */
+        .reward-section {
+            text-align: center;
+            display: none;
+        }
+
+        .reward-section.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        video {
+            width: 100%;
+            max-height: 350px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            margin-top: 15px;
+            background: #000;
+        }
+
+        /* Admin / Edit Button & Panel */
+        .edit-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            z-index: 100;
+            transition: transform 0.2s;
+        }
+
+        .edit-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .edit-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .edit-modal.active {
+            display: flex;
+        }
+
+        .edit-content {
+            background: #0d1126;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+        }
+
+        .edit-content h3 {
+            margin-bottom: 15px;
+            color: var(--accent-gold);
+            font-family: 'Cinzel', serif;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        .btn-save {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-save:hover {
+            opacity: 0.9;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="badge" id="badgeTitle">Expediente de Amor • 5 Días</div>
+            <h1 id="mainTitle">Para Ti, Mi Amor</h1>
+            <p class="subtitle" id="mainSubtitle">Supera cada desafío diario para desbloquear nuestra sorpresa final.</p>
+        </header>
+
+        <div class="card">
+            <!-- Days Navigation -->
+            <div class="days-grid" id="daysGrid">
+                <button class="day-btn active" onclick="switchDay(0)">Día 1</button>
+                <button class="day-btn" onclick="switchDay(1)">Día 2</button>
+                <button class="day-btn" onclick="switchDay(2)">Día 3</button>
+                <button class="day-btn" onclick="switchDay(3)">Día 4</button>
+                <button class="day-btn" onclick="switchDay(4)">Día 5</button>
+            </div>
+
+            <!-- Challenge Container -->
+            <div id="challengeContainer">
+                <div class="challenge-header">
+                    <span class="challenge-title" id="dayHeaderTitle">Día 1: El Inicio</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);" id="progressText">Nivel 1 de 5</span>
+                </div>
+                <div class="question-text" id="questionText">Cargando pregunta...</div>
+                <div class="options-list" id="optionsList"></div>
+                <div class="feedback-box" id="feedbackBox">
+                    <p id="feedbackText" style="font-size: 0.9rem; line-height: 1.4;"></p>
+                </div>
+            </div>
+
+            <!-- Reward Container (Initially Hidden) -->
+            <div class="reward-section" id="rewardSection">
+                <h3 style="font-family: 'Cinzel', serif; color: var(--accent-gold); margin-bottom: 10px;">¡Has completado los 5 días!</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px;">Has demostrado cuánto me conoces. Aquí tienes tu recompensa especial:</p>
+                <video controls id="rewardVideo" src="1000123290.mp4" poster="">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Button -->
+    <button class="edit-toggle" onclick="toggleEditModal()" title="Modo Edición">⚙️</button>
+
+    <!-- Edit Modal -->
+    <div class="edit-modal" id="editModal">
+        <div class="edit-content">
+            <h3>Panel de Edición Personalizada</h3>
+            <div class="form-group">
+                <label>Título Principal o Nombre de tu Novia:</label>
+                <input type="text" id="editTitleInput" value="Para Ti, Mi Amor">
+            </div>
+            <div class="form-group">
+                <label>Nombre del archivo de video (ej. 1000123290.mp4):</label>
+                <input type="text" id="editVideoInput" value="1000123290.mp4">
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Nota: Puedes personalizar las preguntas editando directamente el código o guardando tus preferencias.</p>
+            <button class="btn-save" onclick="saveCustomSettings()">Guardar Cambios</button>
+            <button class="btn-save" style="background: rgba(239, 68, 68, 0.3); margin-top: 8px;" onclick="toggleEditModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        // Data Structure for 5 Days Challenges
+        let challenges = [
+            {
+                day: 1,
+                title: "Día 1: Los Recuerdos",
+                question: "¿Cuál es el detalle más especial o momento que marcó el inicio de nuestra historia?",
+                options: [
+                    "Nuestras pláticas interminables de madrugada",
+                    "La primera vez que nos vimos en persona",
+                    "Las risas y ocurrencias compartidas desde el primer día",
+                    "Todas las anteriores juntas"
+                ],
+                correct: 3,
+                supportMsg: "¡Exacto! Cada pequeño instante construyó lo que somos hoy."
+            },
+            {
+                day: 2,
+                title: "Día 2: Complicidad",
+                question: "¿Qué es lo que más disfruto hacer a tu lado?",
+                options: [
+                    "Verte sonreír y platicar de cualquier tema",
+                    "Apoyarnos en nuestras metas y proyectos",
+                    "Compartir momentos tranquilos y únicos",
+                    "Todo lo anterior, porque todo es perfecto contigo"
+                ],
+                correct: 3,
+                supportMsg: "¡Muy bien! Cada segundo contigo se vuelve mi momento favorito."
+            },
+            {
+                day: 3,
+                title: "Día 3: Confianza",
+                question: "¿Cuál es nuestra mayor fortaleza como pareja?",
+                options: [
+                    "La comunicación y la sinceridad mutua",
+                    "El apoyo incondicional en las buenas y malas",
+                    "La confianza y el amor genuino que nos tenemos",
+                    "Todas son totalmente ciertas"
+                ],
+                correct: 3,
+                supportMsg: "¡Correcto! Nuestra complicidad es indestructible."
+            },
+            {
+                day: 4,
+                title: "Día 4: El Futuro",
+                question: "¿Cuál es la meta que más ilusión nos da cumplir juntos?",
+                options: [
+                    "Seguir creciendo personal y profesionalmente",
+                    "Viajar y conocer nuevos lugares de la mano",
+                    "Construir un futuro lleno de paz y felicidad",
+                    "Cumplir cada uno de nuestros sueños en equipo"
+                ],
+                correct: 3,
+                supportMsg: "¡Así es! Vamos por un futuro brillante juntos."
+            },
+            {
+                day: 5,
+                title: "Día 5: El Destino Final",
+                question: "Si tuvieras que resumir lo que significas para mí en una sola frase, ¿cuál sería?",
+                options: [
+                    "Eres mi persona favorita en todo el mundo",
+                    "Eres mi paz y mi mayor motivación",
+                    "Eres el regalo más bonito que la vida me dio",
+                    "Eres mi presente y mi futuro entero"
+                ],
+                correct: 3,
+                supportMsg: "¡Perfecto! Has desbloqueado el destino final de nuestro amor."
+            }
+        ];
+
+        let currentDayIndex = 0;
+        let completedDays = [false, false, false, false, false];
+
+        function loadChallenge(index) {
+            currentDayIndex = index;
+            const ch = challenges[index];
+            
+            document.getElementById('dayHeaderTitleinnerText').innerText = ch.title;
+            document.getElementById('progressText').innerText = `Nivel ${index + 1} de 5`;
+            document.getElementById('questionText').innerText = ch.question;
+            
+            const optionsList = document.getElementById('optionsList');
+            optionsList.innerHTML = '';
+            
+            ch.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(idx, btn);
+                optionsList.appendChild(btn);
+            });
+
+            document.getElementById('feedbackBox').classList.remove('show');
+            updateDaysNav();
+        }
+
+        function selectOption(selectedIndex, btnElement) {
+            const ch = challenges[currentDayIndex];
+            const buttons = document.querySelectorAll('.option-btn');
+            
+            // Disable all options after selection
+            buttons.forEach(b => b.style.pointerEvents = 'none');
+
+            if (selectedIndex === ch.correct) {
+                btnElement.classList.add('correct');
+                showFeedback(true, ch.supportMsg);
+                completedDays[currentDayIndex] = true;
+                
+                setTimeout(() => {
+                    if (currentDayIndex < 4) {
+                        loadChallenge(currentDayIndex + 1);
+                    } else {
+                        checkAllCompleted();
+                    }
+                }, 2000);
+            } else {
+                btnElement.classList.add('incorrect');
+                buttons[ch.correct].classList.add('correct');
+                showFeedback(false, "Casi, pero inténtalo de nuevo o recuerda lo mucho que nos amamos. ¡Tú puedes!");
+                
+                setTimeout(() => {
+                    buttons.forEach(b => {
+                        b.style.pointerEvents = 'auto';
+                        b.classList.remove('incorrect', 'correct');
+                    });
+                    document.getElementById('feedbackBox').classList.remove('show');
+                }, 3000);
+            }
+            updateDaysNav();
+        }
+
+        function showFeedback(isSuccess, msg) {
+            const fb = document.getElementById('feedbackBox');
+            const ft = document.getElementById('feedbackText');
+            fb.style.borderColor = isSuccess ? 'var(--success)' : 'var(--error)';
+            ft.innerText = msg;
+            fb.classList.add('show');
+        }
+
+        function switchDay(index) {
+            // Allow switching if previous days are completed or viewing completed ones
+            if (index === 0 || completedDays[index - 1] || completedDays[index]) {
+                document.getElementById('challengeContainer').style.display = 'block';
+                document.getElementById('rewardSection').classList.remove('show');
+                loadChallenge(index);
+            } else {
+                alert("Completa el día anterior para desbloquear este nivel.");
+            }
+        }
+
+        function updateDaysNav() {
+            const buttons = document.querySelectorAll('.day-btn');
+            buttons.forEach((btn, idx) => {
+                btn.classList.remove('active', 'completed');
+                if (idx === currentDayIndex) btn.classList.add('active');
+                if (completedDays[idx]) btn.classList.add('completed');
+            });
+        }
+
+        function checkAllCompleted() {
+            if (completedDays.every(val => val === true)) {
+                document.getElementById('challengeContainer').style.display = 'none';
+                document.getElementById('rewardSection').classList.add('show');
+            }
+        }
+
+        function toggleEditModal() {
+            const modal = document.getElementById('editModal');
+            modal.classList.toggle('active');
+        }
+
+        function saveCustomSettings() {
+            const title = document.getElementById('editTitleInput').value;
+            const video = document.getElementById('editVideoInput').value;
+            
+            if(title) document.getElementById('mainTitle').innerText = title;
+            if(video) document.getElementById('rewardVideo').src = video;
+            
+            toggleEditModal();
+        }
+
+        // Initialize first challenge
+        loadChallenge(0);
+    </script>
+</body>
+</html>
