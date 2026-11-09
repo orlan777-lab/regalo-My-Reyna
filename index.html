@@ -468,7 +468,7 @@
             currentDayIndex = index;
             const ch = challenges[index];
             
-            document.getElementById('dayHeaderTitleinnerText').innerText = ch.title;
+            document.getElementById('dayHeaderTitle').innerText = ch.title;
             document.getElementById('progressText').innerText = `Nivel ${index + 1} de 5`;
             document.getElementById('questionText').innerText = ch.question;
             
@@ -491,7 +491,6 @@
             const ch = challenges[currentDayIndex];
             const buttons = document.querySelectorAll('.option-btn');
             
-            // Disable all options after selection
             buttons.forEach(b => b.style.pointerEvents = 'none');
 
             if (selectedIndex === ch.correct) {
@@ -531,7 +530,6 @@
         }
 
         function switchDay(index) {
-            // Allow switching if previous days are completed or viewing completed ones
             if (index === 0 || completedDays[index - 1] || completedDays[index]) {
                 document.getElementById('challengeContainer').style.display = 'block';
                 document.getElementById('rewardSection').classList.remove('show');
@@ -572,7 +570,6 @@
             toggleEditModal();
         }
 
-        // Initialize first challenge
         loadChallenge(0);
     </script>
 </body>
