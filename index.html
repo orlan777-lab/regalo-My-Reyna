@@ -385,7 +385,6 @@
                 <label>Nombre del archivo de video (ej. 1000123290.mp4):</label>
                 <input type="text" id="editVideoInput" value="1000123290.mp4">
             </div>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">Nota: Puedes personalizar las preguntas editando directamente el código o guardando tus preferencias.</p>
             <button class="btn-save" onclick="saveCustomSettings()">Guardar Cambios</button>
             <button class="btn-save" style="background: rgba(239, 68, 68, 0.3); margin-top: 8px;" onclick="toggleEditModal()">Cerrar</button>
         </div>
@@ -435,16 +434,16 @@
             },
             {
                 day: 4,
-                title: "Día 4: El Futuro",
-                question: "¿Cuál es la meta que más ilusión nos da cumplir juntos?",
+                title: "Día 4: Instantes Mágicos",
+                question: "¿Qué fue lo que más disfruté cuando estuvimos juntos?",
                 options: [
-                    "Seguir creciendo personal y profesionalmente",
-                    "Viajar y conocer nuevos lugares de la mano",
-                    "Construir un futuro lleno de paz y felicidad",
-                    "Cumplir cada uno de nuestros sueños en equipo"
+                    "Mirarla y decirle lo guapa que es en persona",
+                    "Caminar de la mano sin prisa",
+                    "Escuchar su risa de cerca",
+                    "Disfrutar de su compañía en silencio"
                 ],
-                correct: 3,
-                supportMsg: "¡Así es! Vamos por un futuro brillante juntos."
+                correct: 0,
+                supportMsg: "¡Exacto! No hay nada más hermoso que decírtelo frente a frente."
             },
             {
                 day: 5,
@@ -508,7 +507,7 @@
             } else {
                 btnElement.classList.add('incorrect');
                 buttons[ch.correct].classList.add('correct');
-                showFeedback(false, "Casi, pero inténtalo de nuevo o recuerda lo mucho que nos amamos. ¡Tú puedes!");
+                showFeedback(false, "Casi, pero recuerda lo mucho que te amo. ¡Inténtalo de nuevo!");
                 
                 setTimeout(() => {
                     buttons.forEach(b => {
